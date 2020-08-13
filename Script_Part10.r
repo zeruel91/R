@@ -6,6 +6,14 @@ install.packages("rJava")
 install.packages("memoise")
 install.packages("KoNLP")
 
+install.packages(c("stringr","hash","tau","Sejong","RSQLite","devtools"),type = "binary")
+
+install.packages("remotes")
+
+remotes::install_github("haven-jeon/KONLP",upgrade = "never", INSTALL_opts=c("--no-multiarch"))
+
+install.packages("rvest")
+library(rvest)
 # 패키지 로드
 library(KoNLP)
 library(dplyr)
