@@ -1,0 +1,59 @@
+#치킨집 분석
+#localdata.go.kr <- 지역 데이터
+library(readxl)
+ck <- read_excel("chicken1.xlsx")
+library(ggplot2)
+library(dplyr)
+
+head(ck)
+tail(ck)
+dim(ck)
+#주소에서 동만 남기고 나머지 삭제
+
+
+addr <- substr(ck$소재지전체주소,12,15)
+addr
+
+
+#숫자 제거
+addr <-   gsub("\\d+", "",addr)
+#gsub('[0-9]','',addr) 도 동일한 효과
+addr <- gsub(" ","",addr)
+
+addr
+
+#동별 치킨집의 개수 확인
+table(addr)
+class(addr)
+#데이터 프레임화
+addr_count <- table(addr)
+addr_count
+addr_count <- data.frame(addr_count)
+addr_count
+    #한줄
+addr_count <- addr %>% table() %>% data.frame()
+addr_count
+
+#그림 그리기
+install.packages('treemap')
+library(treemap)
+
+treemap(addr_count,index='.',vSize='Freq',title = "서대문구 동별 치킨집 분포")
+arrange(addr_count,desc(Freq)) %>% head(20)
+
+#DIY---------------------------------
+df <- read_excel("df2.xlsx")
+head(df)
+df <- substr(df$소재지전체주소,7,9)
+df
+#df <-   gsub("\\d+", "",df)
+df <- gsub(" ","",df)
+df
+
+table(df)
+df_count <- df %>% table() %>% data.frame()
+df_count
+
+treemap(df_count,index='.',vSize="Freq",title='구 별 횟집 갯수')
+arrange(df_count,desc(Freq)) %>% head(20)
+#---------------------------------------
